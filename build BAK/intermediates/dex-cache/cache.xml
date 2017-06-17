@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="false"
+        jar="C:\Users\acornelius\.android\build-cache\25e2096f62a9098da819278996f5b5400ca3bf5c\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="c936c1bd42f0c018c18920c7bec619ef056b24f8">
+        <dex dex="C:\AS\ud845-Pets\app\build\intermediates\pre-dexed\debug\classes_97ac9fa9c45bcc0a3c807f534ae9974c1c6b90c5.jar" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\AS\LeasePredictor\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="9cee84c1d8c9c71d6dbffa083731405d07e59950">
+        <dex dex="C:\AS\LeasePredictor\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_aa7ca2ddf1223e756b0e8b5460c86ac87b3b8a1d\classes.dex" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\acornelius\.android\build-cache\72624390840fedb180dbaecb87b330897e31bf64\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="787871951412550519b0222aba3c9df4cea49875">
+        <dex dex="C:\AS\ud845-Pets\app\build\intermediates\pre-dexed\debug\classes_3c683ba765db273b84eed501f64b3d11fa32080e.jar" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\AS\ud845-Pets\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="40ad3c0f61d2567bafbbb47a6406c5f334706416">
+        <dex dex="C:\AS\ud845-Pets\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_60edeef5b9ef5c52ec807473ee032e68f539c83c\classes.dex" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\acornelius\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\24.1.1\support-annotations-24.1.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="3af19f153122737b372622fa6c81dd11a1c6b999">
+        <dex dex="C:\AS\ud845-Pets\app\build\intermediates\pre-dexed\debug\support-annotations-24.1.1_f2a95e1bb7029218071c847f2fe54d3bdb3bf4c9.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\acornelius\.android\build-cache\e18e6824d1fa5095afeed82dcfbba9fb5ac72227\output\jars\libs\internal_impl-24.1.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="f78c2f395cb096f9dc1dc07e729922b8fcd3c4f5">
+        <dex dex="C:\AS\ud845-Pets\app\build\intermediates\pre-dexed\debug\internal_impl-24.1.1_ad5e8a27f8058514a22232232c92d95f45242510.jar" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\AS\LeasePredictor\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="510aa6efc159983dfbffa676a0dae37568c0a46f">
+        <dex dex="C:\AS\LeasePredictor\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_97a2f0330bb2c6f3278a76efd72996fac74bbf8f\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\AS\ud845-Pets\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="510aa6efc159983dfbffa676a0dae37568c0a46f">
+        <dex dex="C:\AS\ud845-Pets\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_2546b15fdcd158591d7c041700fa0785409f218b\classes.dex" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\acornelius\.android\build-cache\4de589e4d2e535eb787675c36d63bf0c20660752\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="1256c10604bb098490eab070d76754ac5ceab35c">
+        <dex dex="C:\AS\ud845-Pets\app\build\intermediates\pre-dexed\debug\classes_ecafa0bf752ebe47d376568bf463f6d623ee65c1.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\acornelius\.android\build-cache\e18e6824d1fa5095afeed82dcfbba9fb5ac72227\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="6d7d803871e3203465f71a163e7af104f807b446">
+        <dex dex="C:\AS\ud845-Pets\app\build\intermediates\pre-dexed\debug\classes_b0e642c2d6c871504e6569f88f85c29fa76826fb.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\acornelius\.android\build-cache\4636b04a0af9951a349afa780780584e000cbd7f\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="f62e763609f65e47dc6c498760a4accf02776788">
+        <dex dex="C:\AS\ud845-Pets\app\build\intermediates\pre-dexed\debug\classes_797e1c8f11625ce1420069ee87b4077cf383f739.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\acornelius\.android\build-cache\0d11004e65ee07c9704321c6a336c6812dd7e4c5\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="e195bd694d5389acfba27ff4fdfa64c4c65b2c05">
+        <dex dex="C:\AS\ud845-Pets\app\build\intermediates\pre-dexed\debug\classes_807ce22de97105105a36ac841345175a6499f72e.jar" />
+    </item>
+
+</items>

@@ -51,7 +51,6 @@
         </LinearLayout>
     </LinearLayout>
 
-    <!-- Measurement category -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -60,7 +59,7 @@
         <!-- Label -->
         <TextView
             style="@style/CategoryStyle"
-            android:text="@string/category_date" />
+            android:text="@string/category_start_date" />
 
         <!-- Input fields -->
         <LinearLayout
@@ -72,23 +71,51 @@
 
             <!-- Name field -->
             <EditText
-                android:id="@+id/edit_date"
+                android:id="@+id/edit_start_date"
                 style="@style/EditorFieldStyle"
-                android:hint="@string/hint_date"
+                android:hint="@string/hint_start_date"
                 android:inputType="textCapWords" />
 
         </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/container_odometer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <!-- Label -->
         <TextView
-            android:text="@string/category_odometer"
+            style="@style/CategoryStyle"
+            android:text="@string/category_start_odometer" />
+
+        <!-- Input fields -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:orientation="vertical"
+            android:paddingLeft="4dp">
+
+            <!-- Name field -->
+            <EditText
+                android:id="@+id/edit_start_odometer"
+                style="@style/EditorFieldStyle"
+                android:hint="@string/hint_start_odometer"
+                android:inputType="textCapWords" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/container_lease_duration"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <!-- Label -->
+        <TextView
+            android:text="@string/category_lease_duration"
             style="@style/CategoryStyle" />
 
         <!-- Input fields -->
@@ -100,8 +127,41 @@
 
             <!-- Weight field -->
             <EditText
-                android:id="@+id/edit_odometer"
-                android:hint="@string/hint_odometer"
+                android:id="@+id/edit_lease_duration"
+                android:hint="@string/hint_lease_duration"
+                android:inputType="number"
+                style="@style/EditorFieldStyle" />
+
+            <!-- Units for odometer (mi) -->
+            <TextView
+                android:id="@+id/label_lease_duration_units"
+                android:text="@string/unit_lease_duration"
+                style="@style/EditorUnitsStyle"/>
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/container_odometer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <!-- Label -->
+        <TextView
+            android:text="@string/category_lease_mileage"
+            style="@style/CategoryStyle" />
+
+        <!-- Input fields -->
+        <RelativeLayout
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:paddingLeft="4dp">
+
+            <!-- Weight field -->
+            <EditText
+                android:id="@+id/edit_lease_mileage"
+                android:hint="@string/hint_lease_mileage"
                 android:inputType="number"
                 style="@style/EditorFieldStyle" />
 
@@ -112,4 +172,38 @@
                 style="@style/EditorUnitsStyle"/>
         </RelativeLayout>
     </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/container_lease_overage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <!-- Label -->
+        <TextView
+            android:text="@string/category_lease_overage"
+            style="@style/CategoryStyle" />
+
+        <!-- Input fields -->
+        <RelativeLayout
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:paddingLeft="4dp">
+
+            <!-- Units for overage ($) -->
+            <TextView
+                android:id="@+id/label_overage_units"
+                android:text="@string/unit_lease_overage"
+                style="@style/EditorUnitsStyle"/>
+
+            <EditText
+                android:id="@+id/edit_lease_overage"
+                android:hint="@string/hint_lease_overage"
+                android:inputType="number"
+                style="@style/EditorFieldStyle" />
+
+        </RelativeLayout>
+    </LinearLayout>
+
 </LinearLayout>

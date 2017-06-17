@@ -17,12 +17,33 @@
     tools:context=".CatalogActivity">
 
     <item
+        android:id="@+id/action_edit_lease_data"
+        android:title="@string/action_edit_lease_data"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_delete_last_entry"
+        android:title="@string/action_delete_last_entry"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_viewedit_data"
+        android:title="@string/action_viewedit_data"
+        app:showAsAction="never" />
+
+    <item
         android:id="@+id/action_insert_dummy_data"
-        android:title="@string/action_insert_dummy_data"
+        android:title="@string/action_insert_dummy_entry"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_insert_sample_data"
+        android:title="@string/action_insert_sample_data"
         app:showAsAction="never" />
 
     <item
         android:id="@+id/action_delete_all_entries"
         android:title="@string/action_delete_all_entries"
         app:showAsAction="never" />
+
 </menu>

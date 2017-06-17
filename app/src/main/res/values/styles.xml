@@ -53,4 +53,43 @@
         <item name="android:paddingTop">16dp</item>
         <item name="android:textAppearance">?android:textAppearanceSmall</item>
     </style>
+
+    <style name="OdometerDisplay">
+        <item name="android:background">
+            @drawable/display_background
+        </item>
+        <item name="android:layout_marginBottom">0sp</item>
+        <item name="android:layout_marginTop">0sp</item>
+    </style>
+
+    <style name="OdometerReadingNew"
+        parent="@android:style/TextAppearance">
+        <item name="android:typeface">monospace</item>
+        <item name="android:textSize">45sp</item>
+        <item name="android:textColor">#ff000000</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="LastReadingOdometer"
+        parent="@android:style/TextAppearance">
+        <item name="android:typeface">monospace</item>
+        <item name="android:textSize">30sp</item>
+        <item name="android:textColor">#ff000000</item>
+        <item name="android:gravity">center</item>
+    </style>
+    <style name="LastReadingDate"
+        parent="@android:style/TextAppearance">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">#ff000000</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="Button" parent="@android:style/Widget.Button">
+        <item name="android:textSize">30sp</item>
+        <item name="android:textColor">#ffcacaca</item>
+        <item name="android:background">@drawable/button</item>
+        <item name="android:layout_margin">4dp</item>
+        <item name="android:layout_height">fill_parent</item>
+    </style>
+
 </resources>

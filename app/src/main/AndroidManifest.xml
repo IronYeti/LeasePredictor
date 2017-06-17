@@ -37,6 +37,18 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.android.odometer.CatalogActivity" />
         </activity>
+        <activity
+            android:name="com.example.android.odometer.LeaseActivity"
+            android:label="@string/editor_activity_title_lease"
+            android:theme="@style/EditorTheme"
+            android:parentActivityName="com.example.android.odometer.CatalogActivity" >
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.android.odometer.CatalogActivity" />
+        </activity>
+
+
     </application>
 
 </manifest>

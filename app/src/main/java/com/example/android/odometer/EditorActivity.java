@@ -30,8 +30,8 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.android.odometer.data.OdometerContract;
-import com.example.android.odometer.data.OdometerDbHelper;
+import com.example.android.odometer.database.OdometerContract;
+import com.example.android.odometer.database.OdometerDbHelper;
 
 /**
  * Allows user to create a new pet or edit an existing one.
@@ -41,9 +41,6 @@ public class EditorActivity extends AppCompatActivity {
     /** EditText field to enter the pet's name */
     private EditText mDateEditText;
 
-    /** EditText field to enter the pet's breed */
-    private EditText mBreedEditText;
-
     /** EditText field to enter the pet's weight */
     private EditText mOdometerEditText;
 
@@ -51,7 +48,7 @@ public class EditorActivity extends AppCompatActivity {
     private Spinner mVehicleSpinner;
 
     /**
-     * Gender of the pet. The possible valid values are in the OdometerContract.java file:
+     * The possible valid values are in the OdometerContract.java file:
      * {@link OdometerContract.OdometerEntry#VEHICLE_UNKNOWN},
      * {@link OdometerContract.OdometerEntry#VEHICLE_1}, or
      * {@link OdometerContract.OdometerEntry#VEHICLE_2}.
@@ -73,7 +70,7 @@ public class EditorActivity extends AppCompatActivity {
     }
 
     /**
-     * Setup the dropdown spinner that allows the user to select the gender of the pet.
+     * Setup the dropdown spinner that allows the user to select the Vehicle.
      */
     private void setupSpinner() {
         // Create adapter for spinner. The list options are from the String array it will use
@@ -118,7 +115,7 @@ public class EditorActivity extends AppCompatActivity {
         // Read from input fields
         // Use trim to eliminate leading or trailing white space
         int vehicleId = 1;
-        String dateString = mBreedEditText.getText().toString().trim();
+//        String dateString = mBreedEditText.getText().toString().trim();
         String mileageString = mOdometerEditText.getText().toString().trim();
         int mileage = Integer.parseInt(mileageString);
 
@@ -132,7 +129,7 @@ public class EditorActivity extends AppCompatActivity {
         // and pet attributes from the editor are the values.
         ContentValues values = new ContentValues();
         values.put(OdometerContract.OdometerEntry.COLUMN_VEHICLE_ID, vehicleId);
-        values.put(OdometerContract.OdometerEntry.COLUMN_DATE, dateString);
+//        values.put(OdometerContract.OdometerEntry.COLUMN_DATETIME, dateString);
         values.put(OdometerContract.OdometerEntry.COLUMN_ODOMETER, mileage);
 
         // Insert a new row for pet in the database, returning the ID of that new row.

@@ -1,82 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:id="@+id/standard_functions"
-             android:layout_width="fill_parent"
-             android:layout_height="fill_parent"
-             android:layout_margin="0px"
-             android:stretchColumns="0,1,2">
+<TableLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/numberpad"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_marginTop="20dp"
+    android:layout_marginBottom="10dp"
+    android:layout_marginLeft="20dp"
+    android:layout_marginRight="20dp"
+    android:stretchColumns="0,1,2"
+    tools:context=".CatalogActivity">
 
-    <TableRow android:layout_margin="0px" android:layout_weight="1">
-        <!--<Button style="@style/CalculatorButton"-->
-                    <!--android:id="@+id/plus"-->
-                    <!--android:text="+"/>-->
-
-        <Button style="@style/CalculatorButton"
+    <TableRow android:layout_margin="0dp" android:layout_weight="1">
+        <Button style="@style/Button"
                     android:id="@+id/one"
                     android:text="1"/>
 
-        <Button style="@style/CalculatorButton"
+        <Button style="@style/Button"
                     android:id="@+id/two"
                     android:text="2"/>
 
-        <Button style="@style/CalculatorButton"
+        <Button style="@style/Button"
                     android:id="@+id/three"
                     android:text="3"/>
     </TableRow>
 
-    <TableRow android:layout_margin="0px" android:layout_weight="1">
-        <!--<Button style="@style/CalculatorButton"-->
-                    <!--android:id="@+id/minus"-->
-                    <!--android:text="-"/>-->
-
-        <Button style="@style/CalculatorButton"
+    <TableRow android:layout_margin="0dp" android:layout_weight="1">
+        <Button style="@style/Button"
                     android:id="@+id/four"
                     android:text="4"/>
 
-        <Button style="@style/CalculatorButton"
+        <Button style="@style/Button"
                     android:id="@+id/five"
                     android:text="5"/>
 
-        <Button style="@style/CalculatorButton"
+        <Button style="@style/Button"
                     android:id="@+id/six"
                     android:text="6"/>
     </TableRow>
 
-    <TableRow android:layout_margin="0px" android:layout_weight="1">
-        <!--<Button style="@style/CalculatorButton"-->
-                    <!--android:id="@+id/multiply"-->
-                    <!--android:text="*"/>-->
-
-        <Button style="@style/CalculatorButton"
+    <TableRow android:layout_margin="0dp" android:layout_weight="1">
+        <Button style="@style/Button"
                     android:id="@+id/seven"
                     android:text="7"/>
 
-        <Button style="@style/CalculatorButton"
+        <Button style="@style/Button"
                     android:id="@+id/eight"
                     android:text="8"/>
 
-        <Button style="@style/CalculatorButton"
+        <Button style="@style/Button"
                     android:id="@+id/nine"
                     android:text="9"/>
     </TableRow>
 
-    <TableRow android:layout_margin="0px" android:layout_weight="1">
-        <!--<Button style="@style/CalculatorButton"-->
-                    <!--android:id="@+id/divide"-->
-                    <!--android:text="/"/>-->
+    <TableRow android:layout_margin="0dp" android:layout_weight="1">
+        <Button style="@style/Button"
+                    android:id="@+id/save"
+                    android:text="Save"/>
 
-        <!--<Button style="@style/CalculatorButton"-->
-                    <!--android:id="@+id/dot"-->
-                    <!--android:text="."/>-->
-
-        <Button style="@style/CalculatorButton"
+        <Button style="@style/Button"
                     android:id="@+id/zero"
                     android:text="0"/>
 
-        <!--<Button style="@style/CalculatorButton"-->
-                    <!--android:id="@+id/equals"-->
-                    <!--android:text="="/>-->
+        <Button style="@style/Button"
+                    android:id="@+id/delete"
+                    android:text="Back"/>
     </TableRow>
 </TableLayout>
-    

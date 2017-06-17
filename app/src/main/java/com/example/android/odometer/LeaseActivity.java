@@ -34,18 +34,23 @@ import com.example.android.odometer.database.OdometerContract;
 import com.example.android.odometer.database.OdometerDbHelper;
 
 /**
- * Allows user to create a new pet or edit an existing one.
+ * Allows user to edit lease details for a vehicle.
  */
-public class EditorActivity extends AppCompatActivity {
+public class LeaseActivity extends AppCompatActivity {
 
-    /** EditText field to enter the pet's name */
-    private EditText mDateEditText;
-
-    /** EditText field to enter the pet's weight */
-    private EditText mOdometerEditText;
-
-    /** EditText field to enter the pet's gender */
+    /** Declare the Lease Details edit fields */
     private Spinner mVehicleSpinner;
+    private EditText mStartDateEditText;
+    private EditText mStartOdometerEditText;
+    private EditText mDurationEditText;
+    private EditText mMileageEditText;
+    private EditText mOverageEditText;
+
+    // Create database helper
+    OdometerDbHelper mDbHelper = new OdometerDbHelper(this);
+
+    // Gets the database in write mode
+    SQLiteDatabase db = mDbHelper.getWritableDatabase();
 
     /**
      * The possible valid values are in the OdometerContract.java file:
@@ -58,13 +63,17 @@ public class EditorActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_editor);
+        setContentView(R.layout.activity_lease);
 
         // Find all relevant views that we will need to read user input from
-        mDateEditText = (EditText) findViewById(R.id.edit_date);
-//        mBreedEditText = (EditText) findViewById(R.id.edit_pet_breed);
-        mOdometerEditText = (EditText) findViewById(R.id.edit_odometer);
         mVehicleSpinner = (Spinner) findViewById(R.id.spinner_vehicle);
+        mStartDateEditText = (EditText) findViewById(R.id.edit_start_date);
+        mStartOdometerEditText = (EditText) findViewById(R.id.edit_start_odometer);
+        mDurationEditText = (EditText) findViewById(R.id.edit_lease_duration);
+        mMileageEditText = (EditText) findViewById(R.id.edit_lease_mileage);
+        mOverageEditText = (EditText) findViewById(R.id.edit_lease_overage);
+
+        // TODO: setup the edtiText listeners here?
 
         setupSpinner();
     }
@@ -75,14 +84,14 @@ public class EditorActivity extends AppCompatActivity {
     private void setupSpinner() {
         // Create adapter for spinner. The list options are from the String array it will use
         // the spinner will use the default layout
-        ArrayAdapter genderSpinnerAdapter = ArrayAdapter.createFromResource(this,
+        ArrayAdapter spinnerAdapter = ArrayAdapter.createFromResource(this,
                 R.array.array_vehicle_options, android.R.layout.simple_spinner_item);
 
         // Specify dropdown layout style - simple list view with 1 item per line
-        genderSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
 
         // Apply the adapter to the spinner
-        mVehicleSpinner.setAdapter(genderSpinnerAdapter);
+        mVehicleSpinner.setAdapter(spinnerAdapter);
 
         // Set the integer mSelected to the constant values
         mVehicleSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -108,72 +117,15 @@ public class EditorActivity extends AppCompatActivity {
         });
     }
 
-    /**
-     * Get user input from editor and save new pet into database.
-     */
-    private void insertOdometerReading() {
-        // Read from input fields
-        // Use trim to eliminate leading or trailing white space
-        int vehicleId = 1;
-//        String dateString = mBreedEditText.getText().toString().trim();
-        String mileageString = mOdometerEditText.getText().toString().trim();
-        int mileage = Integer.parseInt(mileageString);
-
-        // Create database helper
-        OdometerDbHelper mDbHelper = new OdometerDbHelper(this);
-
-        // Gets the database in write mode
-        SQLiteDatabase db = mDbHelper.getWritableDatabase();
-
-        // Create a ContentValues object where column names are the keys,
-        // and pet attributes from the editor are the values.
+    // TODO: something needs to call this function
+    private void updateDuration(){
+        // Create a ContentValues object where column names are the keys
         ContentValues values = new ContentValues();
-        values.put(OdometerContract.OdometerEntry.COLUMN_VEHICLE_ID, vehicleId);
-//        values.put(OdometerContract.OdometerEntry.COLUMN_DATETIME, dateString);
-        values.put(OdometerContract.OdometerEntry.COLUMN_ODOMETER, mileage);
+        values.put(OdometerContract.LeaseDetails.COLUMN_DURATION, Integer.parseInt(mDurationEditText.getText().toString()));
+        String whereClause = OdometerContract.OdometerEntry.COLUMN_VEHICLE_ID + "=" + mVehicle;
+        String[] whereArgs = {};
 
-        // Insert a new row for pet in the database, returning the ID of that new row.
-        long newRowId = db.insert(OdometerContract.OdometerEntry.TABLE_NAME, null, values);
-
-        // Show a toast message depending on whether or not the insertion was successful
-        if (newRowId == -1) {
-            // If the row ID is -1, then there was an error with insertion.
-            Toast.makeText(this, "Error with saving reading", Toast.LENGTH_SHORT).show();
-        } else {
-            // Otherwise, the insertion was successful and we can display a toast with the row ID.
-            Toast.makeText(this, "Entry saved with row id: " + newRowId, Toast.LENGTH_SHORT).show();
-        }
+        db.update(OdometerContract.LeaseDetails.TABLE_NAME, values, whereClause, whereArgs);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu options from the res/menu/menu_editor.xml file.
-        // This adds menu items to the app bar.
-        getMenuInflater().inflate(R.menu.menu_editor, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // User clicked on a menu option in the app bar overflow menu
-        switch (item.getItemId()) {
-            // Respond to a click on the "Save" menu option
-            case R.id.action_save:
-                // Save reading to database
-                insertOdometerReading();
-                // Exit activity
-                finish();
-                return true;
-            // Respond to a click on the "Delete" menu option
-            case R.id.action_delete:
-                // Do nothing for now
-                return true;
-            // Respond to a click on the "Up" arrow button in the app bar
-            case android.R.id.home:
-                // Navigate back to parent activity (CatalogActivity)
-                NavUtils.navigateUpFromSameTask(this);
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
 }
