@@ -58,6 +58,7 @@ public class OdometerDbHelper extends SQLiteOpenHelper {
                 + OdometerContract.OdometerEntry.COLUMN_DATETIME + " DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, "
                 + OdometerContract.OdometerEntry.COLUMN_ODOMETER + " INTEGER NOT NULL);";
         // Execute the SQL statement
+        System.out.println("...Creating OdometerEntry table");
         db.execSQL(SQL_CREATE_ODOMETER_TABLE);
 
         // Create a String that contains the SQL statement to create the lease deatils table
@@ -70,6 +71,7 @@ public class OdometerDbHelper extends SQLiteOpenHelper {
                 + OdometerContract.LeaseDetails.COLUMN_MAX_MILES +  " INTEGER NOT NULL DEFAULT 30000, "
                 + OdometerContract.LeaseDetails.COLUMN_OVERAGE_COST + " DOUBLE NOT NULL DEFAULT 0.0);";
         // Execute the SQL statement
+        System.out.println("...Creating LeaseDetails table");
         db.execSQL(SQL_CREATE_ODOMETER_TABLE);
 
         // TODO:  Insert default rows for Vehicles 1 & 2
@@ -81,6 +83,7 @@ public class OdometerDbHelper extends SQLiteOpenHelper {
         values.put(OdometerContract.LeaseDetails.COLUMN_DURATION, 36);
         values.put(OdometerContract.LeaseDetails.COLUMN_MAX_MILES, 30000);
         values.put(OdometerContract.LeaseDetails.COLUMN_OVERAGE_COST, 0.25);
+        System.out.println("...Seeding LeaseDetails table");
         db.insert(OdometerContract.LeaseDetails.TABLE_NAME, null, values);
     }
 

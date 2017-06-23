@@ -54,6 +54,16 @@
         <item name="android:textAppearance">?android:textAppearanceSmall</item>
     </style>
 
+    <!-- Style for the measurement units for an EditText field in the editor -->
+    <style name="EditorItemStyle">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:paddingTop">16dp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textAppearance">?android:textAppearanceSmall</item>
+    </style>
+
     <style name="OdometerDisplay">
         <item name="android:background">
             @drawable/display_background

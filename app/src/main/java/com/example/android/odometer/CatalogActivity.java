@@ -16,6 +16,7 @@
 package com.example.android.odometer;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -55,6 +56,8 @@ public class CatalogActivity extends AppCompatActivity implements OnClickListene
 
     private Graph graph;
 
+    private LeaseActivity leaseActivity;
+
     private Data data;
 
     private SampleData sampleData;
@@ -81,8 +84,11 @@ public class CatalogActivity extends AppCompatActivity implements OnClickListene
         graph.setDBConnection(mDbHelper);
         graph.setDataObj(data);
 
-        final ViewGroup standard = (ViewGroup) findViewById(R.id.numberpad);
+//        leaseActivity = new LeaseActivity();
+//        leaseActivity.setDBConnection(mDbHelper);
+//        leaseActivity.setDataObj(data);
 
+        final ViewGroup standard = (ViewGroup) findViewById(R.id.numberpad);
         final Queue<ViewGroup> views = new LinkedList<ViewGroup>();
         views.add(standard);
 
@@ -100,7 +106,7 @@ public class CatalogActivity extends AppCompatActivity implements OnClickListene
                 }
             }
         }
-    System.out.println("Done with CatalogACtivity OnCreate ..............");
+    System.out.println("......... Done with CatalogActivity.OnCreate");
     }
 
     @Override
@@ -114,15 +120,15 @@ public class CatalogActivity extends AppCompatActivity implements OnClickListene
         displayView.setText(numberpad.getCurrentDisplay());
     }
 
-    private void updateLastReading() {
-        Integer odometer = data.lastOdometerValue;
-        String date = data.lastOdometerDate;
-
-        TextView displayView = (TextView) findViewById(R.id.displayLastEntryValue);
-        displayView.setText(String.valueOf(odometer));
-        displayView = (TextView) findViewById(R.id.displayLastEntryDate);
-        displayView.setText(String.valueOf(date));
-    }
+//    private void updateLastReading() {
+//        Integer odometer = data.lastOdometerValue;
+//        String date = data.lastOdometerDate;
+//
+//        TextView displayView = (TextView) findViewById(R.id.displayLastEntryValue);
+//        displayView.setText(String.valueOf(odometer));
+//        displayView = (TextView) findViewById(R.id.displayLastEntryDate);
+//        displayView.setText(String.valueOf(date));
+//    }
 
     private void refreshScreen() {
         for (int i = 0; i < 1000; i++) {
@@ -508,6 +514,9 @@ public class CatalogActivity extends AppCompatActivity implements OnClickListene
                 return true;
             case R.id.action_edit_lease_data:
                 // TODO: call the LeaseActivity and pass Intent (is there anything to pass?)
+
+                Intent editLeaseDataIntent = new Intent(this, LeaseActivity.class);
+                startActivity(editLeaseDataIntent);
                 return true;
         }
 //        refreshScreen();

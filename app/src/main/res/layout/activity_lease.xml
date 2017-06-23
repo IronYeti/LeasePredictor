@@ -23,42 +23,42 @@
     <!-- Overview category -->
 
     <!-- Vehicle category -->
+    <!--<LinearLayout-->
+        <!--android:id="@+id/container_vehicle"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:orientation="horizontal">-->
+
+        <!--&lt;!&ndash; Label &ndash;&gt;-->
+        <!--<TextView-->
+            <!--android:text="@string/category_vehicle"-->
+            <!--style="@style/EditorItemStyle" />-->
+
+        <!--&lt;!&ndash; Input field &ndash;&gt;-->
+        <!--<LinearLayout-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_weight="2"-->
+            <!--android:orientation="vertical">-->
+
+            <!--&lt;!&ndash; Vehicle drop-down spinner &ndash;&gt;-->
+            <!--<Spinner-->
+                <!--android:id="@+id/spinner_vehicle"-->
+                <!--android:layout_height="48dp"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:paddingRight="16dp"-->
+                <!--android:spinnerMode="dropdown"/>-->
+        <!--</LinearLayout>-->
+    <!--</LinearLayout>-->
+
     <LinearLayout
-        android:id="@+id/container_vehicle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <!-- Label -->
         <TextView
-            android:text="@string/category_vehicle"
-            style="@style/CategoryStyle" />
-
-        <!-- Input field -->
-        <LinearLayout
-            android:layout_height="wrap_content"
-            android:layout_width="0dp"
-            android:layout_weight="2"
-            android:orientation="vertical">
-
-            <!-- Vehicle drop-down spinner -->
-            <Spinner
-                android:id="@+id/spinner_vehicle"
-                android:layout_height="48dp"
-                android:layout_width="wrap_content"
-                android:paddingRight="16dp"
-                android:spinnerMode="dropdown"/>
-        </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <!-- Label -->
-        <TextView
-            style="@style/CategoryStyle"
+            style="@style/EditorItemStyle"
             android:text="@string/category_start_date" />
 
         <!-- Input fields -->
@@ -74,7 +74,7 @@
                 android:id="@+id/edit_start_date"
                 style="@style/EditorFieldStyle"
                 android:hint="@string/hint_start_date"
-                android:inputType="textCapWords" />
+                android:inputType="date" />
 
         </LinearLayout>
     </LinearLayout>
@@ -86,7 +86,7 @@
 
         <!-- Label -->
         <TextView
-            style="@style/CategoryStyle"
+            style="@style/EditorItemStyle"
             android:text="@string/category_start_odometer" />
 
         <!-- Input fields -->
@@ -102,7 +102,7 @@
                 android:id="@+id/edit_start_odometer"
                 style="@style/EditorFieldStyle"
                 android:hint="@string/hint_start_odometer"
-                android:inputType="textCapWords" />
+                android:inputType="number"/>
 
         </LinearLayout>
     </LinearLayout>
@@ -116,7 +116,7 @@
         <!-- Label -->
         <TextView
             android:text="@string/category_lease_duration"
-            style="@style/CategoryStyle" />
+            style="@style/EditorItemStyle" />
 
         <!-- Input fields -->
         <RelativeLayout
@@ -149,7 +149,7 @@
         <!-- Label -->
         <TextView
             android:text="@string/category_lease_mileage"
-            style="@style/CategoryStyle" />
+            style="@style/EditorItemStyle" />
 
         <!-- Input fields -->
         <RelativeLayout
@@ -182,7 +182,7 @@
         <!-- Label -->
         <TextView
             android:text="@string/category_lease_overage"
-            style="@style/CategoryStyle" />
+            style="@style/EditorItemStyle" />
 
         <!-- Input fields -->
         <RelativeLayout
@@ -200,7 +200,7 @@
             <EditText
                 android:id="@+id/edit_lease_overage"
                 android:hint="@string/hint_lease_overage"
-                android:inputType="number"
+                android:inputType="numberDecimal"
                 style="@style/EditorFieldStyle" />
 
         </RelativeLayout>

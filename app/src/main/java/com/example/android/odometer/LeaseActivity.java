@@ -33,24 +33,31 @@ import android.widget.Toast;
 import com.example.android.odometer.database.OdometerContract;
 import com.example.android.odometer.database.OdometerDbHelper;
 
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+
 /**
  * Allows user to edit lease details for a vehicle.
  */
 public class LeaseActivity extends AppCompatActivity {
 
+    private OdometerDbHelper mDbHelper;
+
+    private Data data;
+
     /** Declare the Lease Details edit fields */
-    private Spinner mVehicleSpinner;
+//    private Spinner mVehicleSpinner;
     private EditText mStartDateEditText;
     private EditText mStartOdometerEditText;
     private EditText mDurationEditText;
     private EditText mMileageEditText;
     private EditText mOverageEditText;
 
-    // Create database helper
-    OdometerDbHelper mDbHelper = new OdometerDbHelper(this);
+//    // Create database helper
+//    OdometerDbHelper mDbHelper = new OdometerDbHelper(this);
 
-    // Gets the database in write mode
-    SQLiteDatabase db = mDbHelper.getWritableDatabase();
+//    // Gets the database in write mode
+//    SQLiteDatabase db = mDbHelper.getWritableDatabase();
 
     /**
      * The possible valid values are in the OdometerContract.java file:
@@ -60,13 +67,16 @@ public class LeaseActivity extends AppCompatActivity {
      */
     private int mVehicle = OdometerContract.OdometerEntry.VEHICLE_1;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lease);
 
+        System.out.println("...... LeaseActivity.onCreate");
+
         // Find all relevant views that we will need to read user input from
-        mVehicleSpinner = (Spinner) findViewById(R.id.spinner_vehicle);
+//        mVehicleSpinner = (Spinner) findViewById(R.id.spinner_vehicle);
         mStartDateEditText = (EditText) findViewById(R.id.edit_start_date);
         mStartOdometerEditText = (EditText) findViewById(R.id.edit_start_odometer);
         mDurationEditText = (EditText) findViewById(R.id.edit_lease_duration);
@@ -75,47 +85,90 @@ public class LeaseActivity extends AppCompatActivity {
 
         // TODO: setup the edtiText listeners here?
 
-        setupSpinner();
+//        setupSpinner();
+
+        mDbHelper = new OdometerDbHelper(this);
+//        readValuesFromDB();
+
+        data = new Data();
+        data.setDBConnection(mDbHelper);
+//        data.refreshLeaseDetatils();
+
     }
+
+    @Override
+    protected void onStart() {
+        System.out.println("...... LeaseActivity.onStart");
+        super.onStart();
+//        data.refreshLeaseDetatils();
+        readValuesFromDB();
+    }
+
+//    public void setDBConnection(OdometerDbHelper mDbHelper) {
+//        this.mDbHelper = mDbHelper;
+//    }
+
+//    public void setDataObj(Data data) {
+//        this.data = data;
+//    }
 
     /**
      * Setup the dropdown spinner that allows the user to select the Vehicle.
      */
-    private void setupSpinner() {
-        // Create adapter for spinner. The list options are from the String array it will use
-        // the spinner will use the default layout
-        ArrayAdapter spinnerAdapter = ArrayAdapter.createFromResource(this,
-                R.array.array_vehicle_options, android.R.layout.simple_spinner_item);
+//    private void setupSpinner() {
+//        // Create adapter for spinner. The list options are from the String array it will use
+//        // the spinner will use the default layout
+//        ArrayAdapter spinnerAdapter = ArrayAdapter.createFromResource(this,
+//                R.array.array_vehicle_options, android.R.layout.simple_spinner_item);
+//
+//        // Specify dropdown layout style - simple list view with 1 item per line
+//        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+//
+//        // Apply the adapter to the spinner
+//        mVehicleSpinner.setAdapter(spinnerAdapter);
+//
+//        // Set the integer mSelected to the constant values
+//        mVehicleSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                String selection = (String) parent.getItemAtPosition(position);
+//                if (!TextUtils.isEmpty(selection)) {
+//                    if (selection.equals(getString(R.string.vehicle_1))) {
+//                        mVehicle = OdometerContract.OdometerEntry.VEHICLE_1;
+//                    } else if (selection.equals(getString(R.string.vehicle_2))) {
+//                        mVehicle = OdometerContract.OdometerEntry.VEHICLE_2;
+//                    } else {
+//                        mVehicle = OdometerContract.OdometerEntry.VEHICLE_UNKNOWN;
+//                    }
+//                }
+//            }
+//
+//            // Because AdapterView is an abstract class, onNothingSelected must be defined
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//                mVehicle = OdometerContract.OdometerEntry.VEHICLE_1;
+//            }
+//        });
+//    }
 
-        // Specify dropdown layout style - simple list view with 1 item per line
-        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
-
-        // Apply the adapter to the spinner
-        mVehicleSpinner.setAdapter(spinnerAdapter);
-
-        // Set the integer mSelected to the constant values
-        mVehicleSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String selection = (String) parent.getItemAtPosition(position);
-                if (!TextUtils.isEmpty(selection)) {
-                    if (selection.equals(getString(R.string.vehicle_1))) {
-                        mVehicle = OdometerContract.OdometerEntry.VEHICLE_1;
-                    } else if (selection.equals(getString(R.string.vehicle_2))) {
-                        mVehicle = OdometerContract.OdometerEntry.VEHICLE_2;
-                    } else {
-                        mVehicle = OdometerContract.OdometerEntry.VEHICLE_UNKNOWN;
-                    }
-                }
-            }
-
-            // Because AdapterView is an abstract class, onNothingSelected must be defined
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                mVehicle = OdometerContract.OdometerEntry.VEHICLE_1;
-            }
-        });
+    public void refreshLeaseDetailsUI() {
+        readValuesFromDB();
     }
+
+    private void readValuesFromDB(){
+        System.out.println("...... LeaseActivity.readValuesFromDB");
+
+//        String formattedDate = new SimpleDateFormat("dd MMM yyyy").format(date);
+        SimpleDateFormat output = new SimpleDateFormat("dd MMM yyyy");
+
+        data.refreshLeaseDetatils();
+        mStartDateEditText.setText(output.format(data.leaseStartDate));
+        mStartOdometerEditText.setText(Integer.toString(data.leaseStartMileage));
+        mDurationEditText.setText(Integer.toString(data.leaseDuration));
+        mMileageEditText.setText(Integer.toString(data.leaseMileage));
+        mOverageEditText.setText(Double.toString(data.leaseOverageCost));
+    }
+
 
     // TODO: something needs to call this function
     private void updateDuration(){
@@ -125,7 +178,28 @@ public class LeaseActivity extends AppCompatActivity {
         String whereClause = OdometerContract.OdometerEntry.COLUMN_VEHICLE_ID + "=" + mVehicle;
         String[] whereArgs = {};
 
-        db.update(OdometerContract.LeaseDetails.TABLE_NAME, values, whereClause, whereArgs);
+//        db.update(OdometerContract.LeaseDetails.TABLE_NAME, values, whereClause, whereArgs);
+    }
+
+    private void saveDate() {
+//        // Gets the database in write mode
+//        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+
+    }
+
+    // this triggers whenever user returns to main activity or exits the app
+    @Override
+    protected void onResume() {
+        System.out.println("...... LeaseActivity.onResume");
+        super.onResume();
+//        readValuesFromDB();
+    }
+
+    // this triggers whenever user returns to main activity or exits the app
+    @Override
+    protected void onPause() {
+        System.out.println("...... LeaseActivity.onPause");
+        super.onPause();
     }
 
 }

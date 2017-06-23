@@ -50,7 +50,7 @@ public class Graph extends AppCompatActivity {
     }
 
     public void updateGraph() {
-        System.out.println("--------  Updating Graph");
+        System.out.println("--------  Graph.updateGraph()");
         deleteGraphData();
         data.refresh();
 
@@ -83,12 +83,12 @@ public class Graph extends AppCompatActivity {
     }
 
     public void deleteGraphData() {
-        System.out.println("--------  Deleting Graph Data");
+        System.out.println("--------  Graph.deleteGraphData()");
         graph.removeAllSeries();
     }
 
     private DataPoint[] actualData() {
-        System.out.println("--------  Getting actualData");
+        System.out.println("--------  Graph.actualData()");
 
         ArrayList<Integer> readings = data.readings;
         int count = readings.size();
@@ -102,7 +102,7 @@ public class Graph extends AppCompatActivity {
     }
 
     private DataPoint[] idealData() {
-        System.out.println("--------  Getting idealData");
+        System.out.println("--------  Graph.idealData()");
 
         int count = data.numberOfReadings;
         double idealOdometer = 0;

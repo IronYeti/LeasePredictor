@@ -92,7 +92,7 @@
     <string name="hint_start_date">Date the Lease Starts</string>
 
     <!-- Text hint for odometer field in the editor [CHAR LIMIT=30] -->
-    <string name="hint_start_odometer">Starting Odometer</string>
+    <string name="hint_start_odometer">Odometer at Lease Start</string>
 
     <!-- Text hint for date field in the editor [CHAR LIMIT=30] -->
     <string name="hint_lease_duration">Length of Lease</string>
@@ -108,7 +108,7 @@
     <string name="unit_odometer">mi</string>
 
     <!-- Units for distance (miles) [CHAR LIMIT=5] -->
-    <string name="unit_lease_duration">mon</string>
+    <string name="unit_lease_duration">month</string>
 
     <!-- Units for distance (miles) [CHAR LIMIT=5] -->
     <string name="unit_lease_overage">$</string>
