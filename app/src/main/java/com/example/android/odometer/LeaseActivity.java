@@ -26,6 +26,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -39,7 +40,7 @@ import java.text.SimpleDateFormat;
 /**
  * Allows user to edit lease details for a vehicle.
  */
-public class LeaseActivity extends AppCompatActivity {
+public class LeaseActivity extends AppCompatActivity implements View.OnClickListener {
 
     private OdometerDbHelper mDbHelper;
 
@@ -52,6 +53,7 @@ public class LeaseActivity extends AppCompatActivity {
     private EditText mDurationEditText;
     private EditText mMileageEditText;
     private EditText mOverageEditText;
+    private Button mButtonSaveLeaseData;
 
 //    // Create database helper
 //    OdometerDbHelper mDbHelper = new OdometerDbHelper(this);
@@ -82,8 +84,15 @@ public class LeaseActivity extends AppCompatActivity {
         mDurationEditText = (EditText) findViewById(R.id.edit_lease_duration);
         mMileageEditText = (EditText) findViewById(R.id.edit_lease_mileage);
         mOverageEditText = (EditText) findViewById(R.id.edit_lease_overage);
+        mButtonSaveLeaseData = (Button) findViewById(R.id.button_save_lease_data);
 
         // TODO: setup the edtiText listeners here?
+//        mStartDateEditText.setOnClickListener(this);
+//        mStartOdometerEditText.setOnClickListener(this);
+//        mDurationEditText.setOnClickListener(this);
+//        mMileageEditText.setOnClickListener(this);
+//        mOverageEditText.setOnClickListener(this);
+        mButtonSaveLeaseData.setOnClickListener(this);
 
 //        setupSpinner();
 
@@ -159,7 +168,7 @@ public class LeaseActivity extends AppCompatActivity {
         System.out.println("...... LeaseActivity.readValuesFromDB");
 
 //        String formattedDate = new SimpleDateFormat("dd MMM yyyy").format(date);
-        SimpleDateFormat output = new SimpleDateFormat("dd MMM yyyy");
+        SimpleDateFormat output = new SimpleDateFormat("MM/dd/yyyy");
 
         data.refreshLeaseDetatils();
         mStartDateEditText.setText(output.format(data.leaseStartDate));
@@ -202,4 +211,51 @@ public class LeaseActivity extends AppCompatActivity {
         super.onPause();
     }
 
+    @Override
+    public void onClick(View v) {
+        Integer vehicleId = mVehicle;
+        switch(v.getId()) {
+            case R.id.button_save_lease_data:
+                String startDate = mStartDateEditText.getText().toString();
+                Integer startOdometer = Integer.valueOf(mStartOdometerEditText.getText().toString());
+                Integer duration = Integer.valueOf(mDurationEditText.getText().toString());
+                Integer mileage = Integer.valueOf(mMileageEditText.getText().toString());
+                Double overage = Double.valueOf(mOverageEditText.getText().toString());
+
+                System.out.println("________ saving vehicle :" + vehicleId.toString());
+                System.out.println("________ saving date    :" + startDate);
+                System.out.println("________ saving odometer:" + startOdometer.toString());
+                System.out.println("________ saving duration:" + duration.toString());
+                System.out.println("________ saving mileage :" + mileage.toString());
+                System.out.println("________ saving overage :" + overage.toString());
+                saveToDatabase(vehicleId, startDate, startOdometer, duration, mileage, overage);
+                break;
+
+        }
+    }
+
+    private void saveToDatabase(Integer vehicleID, String startDate, Integer startOdometer, Integer duartion, Integer mileage, Double overage){
+        System.out.println("...... LeaseActivity.saveToDatabase");
+        // Gets the database in write mode
+        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+        // Create a ContentValues object where column names are the keys,
+        // and attributes are the values.
+        ContentValues values = new ContentValues();
+
+        values.put(OdometerContract.LeaseDetails.COLUMN_VEHICLE_ID, vehicleID);
+        values.put(OdometerContract.LeaseDetails.COLUMN_START_DATE, startDate);
+        values.put(OdometerContract.LeaseDetails.COLUMN_START_MILEAGE, startOdometer);
+        values.put(OdometerContract.LeaseDetails.COLUMN_DURATION, duartion);
+        values.put(OdometerContract.LeaseDetails.COLUMN_MAX_MILES, mileage);
+        values.put(OdometerContract.LeaseDetails.COLUMN_OVERAGE_COST, overage);
+
+        String whereClause = OdometerContract.OdometerEntry.COLUMN_VEHICLE_ID + "=?";
+        String[] whereArgs = new String[] { String.valueOf(vehicleID) };
+
+        long newRowId = db.update(OdometerContract.LeaseDetails.TABLE_NAME, values, whereClause, whereArgs);
+
+//        refreshScreen();
+//        updateLastReading();
+        Toast.makeText(this, getString(R.string.toast_save_lease_data), Toast.LENGTH_SHORT).show();
+    }
 }

@@ -62,22 +62,30 @@
             android:text="@string/category_start_date" />
 
         <!-- Input fields -->
-        <LinearLayout
-            android:layout_width="0dp"
+        <RelativeLayout
             android:layout_height="wrap_content"
+            android:layout_width="0dp"
             android:layout_weight="2"
-            android:orientation="vertical"
             android:paddingLeft="4dp">
 
-            <!-- Name field -->
-            <EditText
-                android:id="@+id/edit_start_date"
-                style="@style/EditorFieldStyle"
-                android:hint="@string/hint_start_date"
-                android:inputType="date" />
+
+                <!-- Name field -->
+                <EditText
+                    android:id="@+id/edit_start_date"
+                    style="@style/EditorFieldStyle"
+                    android:hint="@string/hint_start_date"
+                    android:inputType="date" />
+
+                <!-- Units for start date -->
+                <TextView
+                    android:id="@+id/label_start_date_format"
+                    android:text="@string/unit_start_date"
+                    style="@style/EditorUnitsStyle"/>
+
+            </RelativeLayout>
 
         </LinearLayout>
-    </LinearLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -113,26 +121,22 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <!-- Label -->
         <TextView
             android:text="@string/category_lease_duration"
             style="@style/EditorItemStyle" />
 
-        <!-- Input fields -->
         <RelativeLayout
             android:layout_height="wrap_content"
             android:layout_width="0dp"
             android:layout_weight="2"
             android:paddingLeft="4dp">
 
-            <!-- Weight field -->
             <EditText
                 android:id="@+id/edit_lease_duration"
                 android:hint="@string/hint_lease_duration"
                 android:inputType="number"
                 style="@style/EditorFieldStyle" />
 
-            <!-- Units for odometer (mi) -->
             <TextView
                 android:id="@+id/label_lease_duration_units"
                 android:text="@string/unit_lease_duration"
@@ -205,5 +209,13 @@
 
         </RelativeLayout>
     </LinearLayout>
+
+    <Button
+        android:id="@+id/button_save_lease_data"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/action_save" />
+
 
 </LinearLayout>

@@ -61,15 +61,28 @@ public class OdometerDbHelper extends SQLiteOpenHelper {
         System.out.println("...Creating OdometerEntry table");
         db.execSQL(SQL_CREATE_ODOMETER_TABLE);
 
+//        // Create a String that contains the SQL statement to create the lease deatils table
+//        SQL_CREATE_ODOMETER_TABLE =  "CREATE TABLE " + OdometerContract.LeaseDetails.TABLE_NAME + " ("
+//                + OdometerContract.LeaseDetails._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+//                + OdometerContract.LeaseDetails.COLUMN_VEHICLE_ID + " INTEGER NOT NULL DEFAULT 1, "
+//                + OdometerContract.LeaseDetails.COLUMN_START_DATE + " DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, "
+//                + OdometerContract.LeaseDetails.COLUMN_START_MILEAGE + " INTEGER NOT NULL DEFAULT 0,"
+//                + OdometerContract.LeaseDetails.COLUMN_DURATION +   " INTEGER NOT NULL DEFAULT 36, "
+//                + OdometerContract.LeaseDetails.COLUMN_MAX_MILES +  " INTEGER NOT NULL DEFAULT 30000, "
+//                + OdometerContract.LeaseDetails.COLUMN_OVERAGE_COST + " DOUBLE NOT NULL DEFAULT 0.0);";
+//        // Execute the SQL statement
+//        System.out.println("...Creating LeaseDetails table");
+//        db.execSQL(SQL_CREATE_ODOMETER_TABLE);
+
         // Create a String that contains the SQL statement to create the lease deatils table
         SQL_CREATE_ODOMETER_TABLE =  "CREATE TABLE " + OdometerContract.LeaseDetails.TABLE_NAME + " ("
                 + OdometerContract.LeaseDetails._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + OdometerContract.LeaseDetails.COLUMN_VEHICLE_ID + " INTEGER NOT NULL DEFAULT 1, "
-                + OdometerContract.LeaseDetails.COLUMN_START_DATE + " DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, "
-                + OdometerContract.LeaseDetails.COLUMN_START_MILEAGE + " INTEGER NOT NULL DEFAULT 0,"
-                + OdometerContract.LeaseDetails.COLUMN_DURATION +   " INTEGER NOT NULL DEFAULT 36, "
-                + OdometerContract.LeaseDetails.COLUMN_MAX_MILES +  " INTEGER NOT NULL DEFAULT 30000, "
-                + OdometerContract.LeaseDetails.COLUMN_OVERAGE_COST + " DOUBLE NOT NULL DEFAULT 0.0);";
+                + OdometerContract.LeaseDetails.COLUMN_VEHICLE_ID + " INTEGER NOT NULL, "
+                + OdometerContract.LeaseDetails.COLUMN_START_DATE + " DATETIME NOT NULL, "
+                + OdometerContract.LeaseDetails.COLUMN_START_MILEAGE + " INTEGER NOT NULL,"
+                + OdometerContract.LeaseDetails.COLUMN_DURATION +   " INTEGER NOT NULL, "
+                + OdometerContract.LeaseDetails.COLUMN_MAX_MILES +  " INTEGER NOT NULL, "
+                + OdometerContract.LeaseDetails.COLUMN_OVERAGE_COST + " DOUBLE NOT NULL);";
         // Execute the SQL statement
         System.out.println("...Creating LeaseDetails table");
         db.execSQL(SQL_CREATE_ODOMETER_TABLE);
@@ -78,7 +91,7 @@ public class OdometerDbHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         // DO I need these or will the defaults work?  what would I insert then?  Otherwise remove defaults from table def
         values.put(OdometerContract.LeaseDetails.COLUMN_VEHICLE_ID, 1);
-        values.put(OdometerContract.LeaseDetails.COLUMN_START_DATE, "2017-01-01");
+        values.put(OdometerContract.LeaseDetails.COLUMN_START_DATE, "07/30/2017");
         values.put(OdometerContract.LeaseDetails.COLUMN_START_MILEAGE, 0);
         values.put(OdometerContract.LeaseDetails.COLUMN_DURATION, 36);
         values.put(OdometerContract.LeaseDetails.COLUMN_MAX_MILES, 30000);

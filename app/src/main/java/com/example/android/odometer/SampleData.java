@@ -30,6 +30,7 @@ public class SampleData extends AppCompatActivity {
     }
 
     public void saveSampleReadings(SQLiteDatabase db, Integer vehicleID){
+        System.out.println("----------- SampleData.saveSampleReadings");
         // Define the sample data in an Array
         String[][] sampleData = new String[][] {
                 {"12/2/2016", "160"},

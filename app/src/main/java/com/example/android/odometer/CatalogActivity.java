@@ -34,12 +34,17 @@ import android.widget.Toast;
 import com.example.android.odometer.database.OdometerContract;
 import com.example.android.odometer.database.OdometerContract.OdometerEntry;
 import com.example.android.odometer.database.OdometerDbHelper;
+
+import com.github.mikephil.charting.charts.BarChart;
+//import com.github.mikephil.charting.charts.Chart;
 //import com.example.android.odometer.SampleData;
 //import com.example.android.odometer.Graph;
 
-import com.jjoe64.graphview.GraphView;
+//import com.jjoe64.graphview.GraphView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Random;
@@ -54,7 +59,9 @@ public class CatalogActivity extends AppCompatActivity implements OnClickListene
 
     private NumberPad numberpad;
 
-    private Graph graph;
+//    private Graph graph;
+
+    private Chart chart;
 
     private LeaseActivity leaseActivity;
 
@@ -78,11 +85,17 @@ public class CatalogActivity extends AppCompatActivity implements OnClickListene
         data = new Data();
         data.setDBConnection(mDbHelper);
 
-        graph = new Graph();
-        GraphView graphObj = (GraphView) findViewById(R.id.graphDisplay);
-        graph.setGraphObj(graphObj);
-        graph.setDBConnection(mDbHelper);
-        graph.setDataObj(data);
+//        graph = new Graph();
+//        GraphView graphObj = (GraphView) findViewById(R.id.graphDisplay);
+//        graph.setGraphObj(graphObj);
+//        graph.setDBConnection(mDbHelper);
+//        graph.setDataObj(data);
+
+        chart = new Chart();
+        BarChart chartObj = (BarChart) findViewById(R.id.chart);
+        chart.setChartObj(chartObj);
+        chart.setDBConnection(mDbHelper);
+        chart.setDataObj(data);
 
 //        leaseActivity = new LeaseActivity();
 //        leaseActivity.setDBConnection(mDbHelper);
@@ -106,7 +119,6 @@ public class CatalogActivity extends AppCompatActivity implements OnClickListene
                 }
             }
         }
-    System.out.println("......... Done with CatalogActivity.OnCreate");
     }
 
     @Override
@@ -116,6 +128,7 @@ public class CatalogActivity extends AppCompatActivity implements OnClickListene
     }
 
     private void updateNewReading() {
+        System.out.println("--------- Main.updateNewReading");
         TextView displayView = (TextView) findViewById(R.id.displayNewEntry);
         displayView.setText(numberpad.getCurrentDisplay());
     }
@@ -131,6 +144,8 @@ public class CatalogActivity extends AppCompatActivity implements OnClickListene
 //    }
 
     private void refreshScreen() {
+        System.out.println("--------- Main.refreshScreen");
+
         for (int i = 0; i < 1000; i++) {
             // delay
         }
@@ -151,7 +166,8 @@ public class CatalogActivity extends AppCompatActivity implements OnClickListene
         displayView.setText(String.valueOf(data.lastOdometerDate));
 
 //        updateGraph();
-        graph.updateGraph();
+//        graph.updateGraph();
+        chart.updateGraph();
     }
 
     /**
@@ -257,6 +273,7 @@ public class CatalogActivity extends AppCompatActivity implements OnClickListene
      * Helper method to insert random data into the database. For debugging purposes only.
      */
     private void insertDummyEntry() {
+        System.out.println("--------- Main.insertDummyEntry");
 //        Integer odometer;
         Integer vehicleID = 1;
 
@@ -268,7 +285,16 @@ public class CatalogActivity extends AppCompatActivity implements OnClickListene
         saveReading(vehicleID, odometer);
     }
 
-    private void saveReading(Integer vehicleID, Integer odometer){
+    private void saveReading(Integer vehicleID, Integer odometer) {
+        System.out.println("--------- Main.saveReading (no datestamp");
+//        Long millis = System.currentTimeMillis();
+
+        String now = new SimpleDateFormat("MM/dd/yyyy").format(Calendar.getInstance().getTime());;
+        saveReading(vehicleID, odometer, now);
+    }
+
+    private void saveReading(Integer vehicleID, Integer odometer, String datestamp){
+        System.out.println("--------- Main.saveReading (w/ datestamp");
         // Gets the database in write mode
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
         // Create a ContentValues object where column names are the keys,
@@ -278,6 +304,7 @@ public class CatalogActivity extends AppCompatActivity implements OnClickListene
         values.put(OdometerEntry.COLUMN_VEHICLE_ID, vehicleID);
 //        values.put(OdometerEntry.COLUMN_DATETIME, "1/1/2017");
         values.put(OdometerEntry.COLUMN_ODOMETER, odometer);
+        values.put(OdometerEntry.COLUMN_DATETIME, datestamp);
 
         // Insert a new row for Jan 1, 2017 in the database, returning the ID of that new row.
         // The first argument for db.insert() is the table name.
@@ -440,6 +467,7 @@ public class CatalogActivity extends AppCompatActivity implements OnClickListene
     }
 
     private Boolean deleteLastEntry() {
+        System.out.println("--------- Main.deleteLastEntry");
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
 
 //        Integer id = getLastID(new String[]{String.valueOf(1)});
@@ -457,13 +485,15 @@ public class CatalogActivity extends AppCompatActivity implements OnClickListene
     }
 
     private void deleteAllEntries() {
+        System.out.println("--------- Main.deleteAllEntries");
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
 
         String whereClause = "1=1";
         String[] whereArgs = new String[] { };
 
         db.delete(OdometerEntry.TABLE_NAME, whereClause, whereArgs);
-        graph.deleteGraphData();
+//        graph.deleteGraphData();
+        chart.deleteGraphData();
     }
 
     @Override
@@ -476,6 +506,7 @@ public class CatalogActivity extends AppCompatActivity implements OnClickListene
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        System.out.println("--------- Main.onOptionsItemSelected");
         // User clicked on a menu option in the app bar overflow menu
         switch (item.getItemId()) {
             case R.id.action_insert_sample_data:
@@ -483,12 +514,12 @@ public class CatalogActivity extends AppCompatActivity implements OnClickListene
                 SampleData call = new SampleData();
                 call.saveSampleReadings(db, 1);
                 refreshScreen();
-                System.out.println("--------  Inserted Sample Data");
+                System.out.println(">>>>>>>>  Inserted Sample Data");
                 return true;
             case R.id.action_insert_dummy_data:
                 insertDummyEntry();
                 refreshScreen();
-                System.out.println("--------  Inserted Dummy Entry");
+                System.out.println(">>>>>>>>  Inserted Dummy Entry");
                 return true;
             case R.id.action_delete_last_entry:
                 if (deleteLastEntry()) {
@@ -497,7 +528,7 @@ public class CatalogActivity extends AppCompatActivity implements OnClickListene
                     Toast.makeText(this, getString(R.string.toast_delete_last_entry_cant), Toast.LENGTH_SHORT).show();
                 }
                 refreshScreen();
-                System.out.println("--------  Deleted Last Entry");
+                System.out.println(">>>>>>>>  Deleted Last Entry");
                 return true;
             case R.id.action_viewedit_data:
                 // Do nothing for now
@@ -510,7 +541,7 @@ public class CatalogActivity extends AppCompatActivity implements OnClickListene
                 deleteAllEntries();
 //                graph.removeAllSeries();
                 refreshScreen();
-                System.out.println("--------  Deleted All Entries!!");
+                System.out.println(">>>>>>>>  Deleted All Entries!!");
                 return true;
             case R.id.action_edit_lease_data:
                 // TODO: call the LeaseActivity and pass Intent (is there anything to pass?)
@@ -520,7 +551,7 @@ public class CatalogActivity extends AppCompatActivity implements OnClickListene
                 return true;
         }
 //        refreshScreen();
-        System.out.println("--------  Nothing selected me thinks");
+        System.out.println("????????  Nothing selected me thinks");
         return super.onOptionsItemSelected(item);
     }
 

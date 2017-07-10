@@ -43,6 +43,9 @@
     <!-- Label for Toast message [CHAR LIMIT=20] -->
     <string name="toast_delete_last_entry_cant">No Data Left To Delete</string>
 
+    <!-- Label for Toast message [CHAR LIMIT=20] -->
+    <string name="toast_save_lease_data">Lease Details Saved</string>
+
 
     <!-- Title for the activity to add a new odometer reading [CHAR LIMIT=20] -->
     <string name="editor_activity_title_new_odometer">Add odometer entry</string>
@@ -103,6 +106,9 @@
     <!-- Text hint for date field in the editor [CHAR LIMIT=30] -->
     <string name="hint_lease_overage">Cost Per Mile Over</string>
 
+
+    <!-- Units for distance (miles) [CHAR LIMIT=5] -->
+    <string name="unit_start_date">mm/dd/yyyy</string>
 
     <!-- Units for distance (miles) [CHAR LIMIT=5] -->
     <string name="unit_odometer">mi</string>
