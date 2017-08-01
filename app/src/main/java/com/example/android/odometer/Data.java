@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import com.example.android.odometer.database.OdometerContract;
 import com.example.android.odometer.database.OdometerDbHelper;
 import com.github.mikephil.charting.data.BarEntry;
+//import com.github.mikephil.charting.data.LineEntry;
 import com.github.mikephil.charting.data.Entry;
 
 import java.text.DateFormat;
@@ -48,6 +49,8 @@ public class Data extends AppCompatActivity {
 
     public ArrayList <Integer> readings;
     public ArrayList <BarEntry> entries;
+    public ArrayList <Entry> lineDataEntries;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,6 +93,7 @@ public class Data extends AppCompatActivity {
 
         readings = new ArrayList<>();
         entries = new ArrayList<>();
+        lineDataEntries = new ArrayList<>();
 
         // Define a projection that specifies which columns from the database
         // you will actually use after this query.
@@ -135,6 +139,7 @@ public class Data extends AppCompatActivity {
                     System.out.println("entries = " + xVal + yVal + "   " + dt);
 
                     entries.add(new BarEntry(xVal, yVal));
+                    lineDataEntries.add(new Entry(xVal, yVal));
                     cursor.moveToNext();
                 }
                 cursor.moveToLast();

@@ -19,6 +19,8 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
@@ -35,7 +37,18 @@ import com.example.android.odometer.database.OdometerContract;
 import com.example.android.odometer.database.OdometerContract.OdometerEntry;
 import com.example.android.odometer.database.OdometerDbHelper;
 
-import com.github.mikephil.charting.charts.BarChart;
+//import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.github.mikephil.charting.utils.ColorTemplate;
 //import com.github.mikephil.charting.charts.Chart;
 //import com.example.android.odometer.SampleData;
 //import com.example.android.odometer.Graph;
@@ -45,9 +58,12 @@ import com.github.mikephil.charting.charts.BarChart;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Displays list of mileage entries that were entered and stored in the app.
@@ -61,7 +77,8 @@ public class CatalogActivity extends AppCompatActivity implements OnClickListene
 
 //    private Graph graph;
 
-    private Chart chart;
+//    private Chart chart;
+//    private LineChartObj lineChart;
 
     private LeaseActivity leaseActivity;
 
@@ -70,6 +87,10 @@ public class CatalogActivity extends AppCompatActivity implements OnClickListene
     private SampleData sampleData;
 
     private TextView display;
+
+    private LineChart mChart;
+//    protected Typeface mTfRegular;
+//    protected Typeface mTfLight;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,15 +112,26 @@ public class CatalogActivity extends AppCompatActivity implements OnClickListene
 //        graph.setDBConnection(mDbHelper);
 //        graph.setDataObj(data);
 
-        chart = new Chart();
-        BarChart chartObj = (BarChart) findViewById(R.id.chart);
-        chart.setChartObj(chartObj);
-        chart.setDBConnection(mDbHelper);
-        chart.setDataObj(data);
+//        chart = new Chart();
+//        BarChart chartObj = (BarChart) findViewById(R.id.barchart);
+//        chart.setChartObj(chartObj);
+//        chart.setDBConnection(mDbHelper);
+//        chart.setDataObj(data);
+
+//        lineChart = new LineChartObj();
+////        LineChart lineChartObj = (LineChart) findViewById(R.id.linechart);
+////        lineChart.setChartObj(lineChartObj);
+//        lineChart.setDBConnection(mDbHelper);
+//        lineChart.setDataObj(data);
 
 //        leaseActivity = new LeaseActivity();
 //        leaseActivity.setDBConnection(mDbHelper);
 //        leaseActivity.setDataObj(data);
+
+//        mTfRegular = Typeface.createFromAsset(getAssets(), "OpenSans-Regular.ttf");
+//        mTfLight = Typeface.createFromAsset(getAssets(), "OpenSans-Light.ttf");
+
+        initChart();
 
         final ViewGroup standard = (ViewGroup) findViewById(R.id.numberpad);
         final Queue<ViewGroup> views = new LinkedList<ViewGroup>();
@@ -124,14 +156,222 @@ public class CatalogActivity extends AppCompatActivity implements OnClickListene
     @Override
     protected void onStart() {
         super.onStart();
-        refreshScreen();
+//        refreshScreen();
     }
 
+    private void initChart() {
+//        final Typeface mTfRegular = Typeface.createFromAsset(getAssets(), "OpenSans-Regular.ttf");
+//        final Typeface mTfLight = Typeface.createFromAsset(getAssets(), "OpenSans-Light.ttf");
+
+        mChart = (LineChart) findViewById(R.id.linechart);
+
+        // no description text
+        mChart.getDescription().setEnabled(false);
+
+        // enable touch gestures
+        mChart.setTouchEnabled(true);
+
+        mChart.setDragDecelerationFrictionCoef(0.9f);
+
+        // enable scaling and dragging
+        mChart.setDragEnabled(true);
+        mChart.setScaleEnabled(true);
+        mChart.setDrawGridBackground(false);
+        mChart.setHighlightPerDragEnabled(true);
+
+        // set an alternative background color
+        mChart.setBackgroundColor(Color.WHITE);
+        mChart.setViewPortOffsets(0f, 0f, 0f, 0f);
+
+        // Data
+        LineData data = new LineData();
+        data.setValueTextColor(Color.WHITE);
+
+        // Add empty data
+        mChart.setData(data);
+
+//        // add data
+////        setData(100, 30);
+//        updateGraph();
+////        mChart.invalidate();
+
+        // get the legend (only possible after setting data)
+        Legend l = mChart.getLegend();
+        l.setEnabled(false);
+
+        XAxis xAxis = mChart.getXAxis();
+        xAxis.setPosition(XAxis.XAxisPosition.TOP_INSIDE);
+//        xAxis.setTypeface(mTfLight);
+        xAxis.setTextSize(10f);
+        xAxis.setTextColor(Color.WHITE);
+        xAxis.setDrawAxisLine(false);
+        xAxis.setDrawGridLines(true);
+        xAxis.setTextColor(Color.rgb(255, 192, 56));
+        xAxis.setCenterAxisLabels(true);
+        xAxis.setGranularity(1f); // one hour
+        xAxis.setValueFormatter(new IAxisValueFormatter() {
+
+            //            private SimpleDateFormat mFormat = new SimpleDateFormat("dd MMM HH:mm");
+            private SimpleDateFormat mFormat = new SimpleDateFormat("dd MMM");
+
+            @Override
+            public String getFormattedValue(float value, AxisBase axis) {
+
+                long millis = TimeUnit.HOURS.toMillis((long) value);
+                return mFormat.format(new Date(millis));
+            }
+        });
+
+        YAxis leftAxis = mChart.getAxisLeft();
+        leftAxis.setPosition(YAxis.YAxisLabelPosition.INSIDE_CHART);
+//        leftAxis.setTypeface(mTfLight);
+        leftAxis.setTextColor(ColorTemplate.getHoloBlue());
+        leftAxis.setDrawGridLines(true);
+        leftAxis.setGranularityEnabled(true);
+        leftAxis.setAxisMinimum(0f);
+        leftAxis.setAxisMaximum(170f);
+        leftAxis.setYOffset(-9f);
+        leftAxis.setTextColor(Color.rgb(255, 192, 56));
+
+        YAxis rightAxis = mChart.getAxisRight();
+        rightAxis.setEnabled(false);
+
+    }
     private void updateNewReading() {
         System.out.println("--------- Main.updateNewReading");
         TextView displayView = (TextView) findViewById(R.id.displayNewEntry);
         displayView.setText(numberpad.getCurrentDisplay());
+//        updateGraph();
     }
+
+
+    public void updateGraph() {
+        System.out.println("--------  LineChartData.updateGraph()");
+
+//        List<Entry> valsComp1 = new ArrayList<Entry>();
+//        List<Entry> valsComp2 = new ArrayList<Entry>();
+//        Entry c1e1 = new Entry(0f, 100000f); // 0 == quarter 1
+//        valsComp1.add(c1e1);
+//        Entry c1e2 = new Entry(1f, 140000f); // 1 == quarter 2 ...
+//        valsComp1.add(c1e2);
+//        // and so on ...
+//
+//        Entry c2e1 = new Entry(0f, 130000f); // 0 == quarter 1
+//        valsComp2.add(c2e1);
+//        Entry c2e2 = new Entry(1f, 115000f); // 1 == quarter 2 ...
+//        valsComp2.add(c2e2);
+//
+//        LineDataSet setComp1 = new LineDataSet(valsComp1, "Company 1");
+//        setComp1.setAxisDependency(YAxis.AxisDependency.LEFT);
+//        LineDataSet setComp2 = new LineDataSet(valsComp2, "Company 2");
+//        setComp2.setAxisDependency(YAxis.AxisDependency.LEFT);
+//        // use the interface ILineDataSet
+//        List<ILineDataSet> dataSets = new ArrayList<ILineDataSet>();
+//        dataSets.add(setComp1);
+//        dataSets.add(setComp2);
+
+//        List<Entry> valsActual = new ArrayList<Entry>();
+//        List<Entry> valsIdeal  = new ArrayList<Entry>();
+//        Entry c1e1 = new Entry(0f, 100000f); // 0 == quarter 1
+//        valsActual.add(c1e1);
+//        Entry c1e2 = new Entry(1f, 140000f); // 1 == quarter 2 ...
+//        valsActual.add(c1e2);
+        // and so on ...
+
+//        Entry c2e1 = new Entry(0f, 130000f); // 0 == quarter 1
+//        valsIdeal.add(c2e1);
+//        Entry c2e2 = new Entry(1f, 115000f); // 1 == quarter 2 ...
+//        valsIdeal.add(c2e2);
+
+        LineDataSet setActual = new LineDataSet(data.lineDataEntries, "Odometer Readings");
+//        LineDataSet setActual = new LineDataSet(valsActual, "Actual");
+        setActual.setAxisDependency(YAxis.AxisDependency.LEFT);
+//        LineDataSet setIdeal = new LineDataSet(valsIdeal, "Ideal");
+//        setIdeal.setAxisDependency(YAxis.AxisDependency.LEFT);
+        // use the interface ILineDataSet
+        List<ILineDataSet> dataSets = new ArrayList<ILineDataSet>();
+        dataSets.add(setActual);
+//        dataSets.add(setIdeal);
+
+
+        LineData data = new LineData(dataSets);
+        mChart.setData(data);
+        mChart.invalidate(); // refresh
+
+        setActual.setAxisDependency(YAxis.AxisDependency.LEFT);
+        setActual.setColor(ColorTemplate.getHoloBlue());
+        setActual.setValueTextColor(ColorTemplate.getHoloBlue());
+        setActual.setLineWidth(1.5f);
+        setActual.setDrawCircles(false);
+        setActual.setDrawValues(false);
+        setActual.setFillAlpha(65);
+        setActual.setFillColor(ColorTemplate.getHoloBlue());
+        setActual.setHighLightColor(Color.rgb(244, 117, 117));
+        setActual.setDrawCircleHole(false);
+
+
+//        List<ILineDataSet> dataSets = new ArrayList<ILineDataSet>();
+////        dataSets.add(setActual);
+////        dataSets.add(setIdeal);
+//        System.out.println("          dataSets = " + dataSets);
+//
+//        // create a data object with the datasets
+//        LineData dataObj = new LineData(dataSets);
+//        System.out.println("          dataObj = " + dataObj);
+////        dataObj.setValueTextColor(Color.BLUE);
+////        dataObj.setValueTextSize(9f);
+//
+//        // set data
+//        System.out.println("          trying mChart.setData()");
+//        mChart.setData(dataObj);
+//        System.out.println("          trying mChart.invalidate()");
+//        mChart.invalidate();
+
+//        ArrayList<Entry> values = new ArrayList<Entry>();
+
+//        float from = now;
+//
+//        // count = hours
+//        float to = now + count;
+//
+//        // increment by 1 hour
+//        for (float x = from; x < to; x++) {
+//
+//            float y = (float) Math.random() * range;
+//            values.add(new Entry(x, y)); // add one entry per hour
+//        }
+
+        // create a dataset and give it a type
+//        LineDataSet set1 = new LineDataSet(values, "DataSet 1");
+//        set1.setAxisDependency(AxisDependency.LEFT);
+//        set1.setColor(ColorTemplate.getHoloBlue());
+//        set1.setValueTextColor(ColorTemplate.getHoloBlue());
+//        set1.setLineWidth(1.5f);
+//        set1.setDrawCircles(false);
+//        set1.setDrawValues(false);
+//        set1.setFillAlpha(65);
+//        set1.setFillColor(ColorTemplate.getHoloBlue());
+//        set1.setHighLightColor(Color.rgb(244, 117, 117));
+//        set1.setDrawCircleHole(false);
+//
+//        // create a data object with the datasets
+//        LineData data = new LineData(set1);
+//        data.setValueTextColor(Color.WHITE);
+//        data.setValueTextSize(9f);
+//
+//        // set data
+//        mChart.setData(data);
+//        mChart.invalidate();
+        System.out.println("--------  LineChartData.updateGraph() Done");
+
+    }
+
+
+    public void deleteGraphData() {
+        System.out.println("--------  LineChartData.deleteGraphData()");
+        mChart.clear();
+    }
+
 
 //    private void updateLastReading() {
 //        Integer odometer = data.lastOdometerValue;
@@ -167,7 +407,10 @@ public class CatalogActivity extends AppCompatActivity implements OnClickListene
 
 //        updateGraph();
 //        graph.updateGraph();
-        chart.updateGraph();
+
+//        chart.updateGraph();
+//        lineChart.updateGraph();
+        updateGraph();
     }
 
     /**
@@ -493,7 +736,9 @@ public class CatalogActivity extends AppCompatActivity implements OnClickListene
 
         db.delete(OdometerEntry.TABLE_NAME, whereClause, whereArgs);
 //        graph.deleteGraphData();
-        chart.deleteGraphData();
+//        chart.deleteGraphData();
+//        lineChart.deleteGraphData();
+        mChart.clear();
     }
 
     @Override
@@ -629,9 +874,11 @@ public class CatalogActivity extends AppCompatActivity implements OnClickListene
                 } else if (newValue == 0) {
                     break;  // do nothing
                 } else {
+                    System.out.println("--------  Main.onClick - Saving New Entry");
                     saveReading(1, Integer.valueOf(String.valueOf(numberpad.getCurrentDisplay())));
 //                    numberpad.clearDisplay();
-                    System.out.println("--------  Saved New Entry");
+                    System.out.println("--------  Main.onClick - Updating graph");
+                    updateGraph();
                     break;
                 }
         }
